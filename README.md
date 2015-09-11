@@ -10,6 +10,10 @@
 
 ![应用截图](http://www.jhuster.com/app/JNote/home.png)
 
+## 文章介绍
+
+[我的Android开源项目:JNote](http://ticktick.blog.51cto.com/823160/1693951)
+
 ## 下载地址
 
 - [本站下载](http://www.jhuster.com/app/JNote/JNote.apk)
