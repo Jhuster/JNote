@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >    
+    <item
+        android:id="@+id/action_display"
+        android:icon="@drawable/ic_action_display"
+        android:showAsAction="always"
+        android:title="显示"/>        
+</menu>

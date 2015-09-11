@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+	<color name="white">@android:color/white</color>
+	<color name="black">@android:color/black</color>
+    
+	<color name="toolbar_bg">#E8FFC4</color>
+	<color name="toolbar_item">#5c7a29</color>
+	<color name="toolbar_divider">#5c7a29</color>
+	
+</resources>

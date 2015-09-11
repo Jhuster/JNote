@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >    
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_action_more"
+        android:showAsAction="always"
+        android:title="更多">     
+        <menu>            
+            <group>
+                <item
+                    android:id="@+id/action_save_md"                    
+                    android:showAsAction="always"
+                    android:icon="@drawable/ic_save_md"
+                    android:title="保存为md文件"/>
+                <item
+                    android:id="@+id/action_save_txt"                    
+                    android:showAsAction="always"
+                    android:icon="@drawable/ic_save_txt"
+                    android:title="保存为纯文本"/>
+                <item
+                    android:id="@+id/action_save_img"                    
+                    android:showAsAction="always"                   
+                    android:icon="@drawable/ic_save_picture"
+                    android:title="保存为图片"/>         
+            </group>            
+        </menu>        
+    </item>       
+</menu>
