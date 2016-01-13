@@ -26,11 +26,11 @@ public class BoldParser extends MDParser {
 
     @Override
     public MDWord parseWordFmt(String content) {
-        if(!content.startsWith(KEY)) {
+        if (!content.startsWith(KEY)) {
             return MDWord.NULL; 
         }
         int position = content.indexOf(KEY,2);
-        if(position==-1) {
+        if (position==-1) {
             return MDWord.NULL;
         }
         return new MDWord(content.substring(2,position),position+2,Markdown.MD_FMT_BOLD);

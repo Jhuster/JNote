@@ -42,17 +42,17 @@ public class MDReader {
     
     public MDReader(String content) {
         mContent = content;
-        if(mContent==null||"".equals(content)) {
+        if (mContent==null||"".equals(content)) {
             return;
         }
         String[] lines = content.split("\n");
-        for(String line : lines) {            
+        for (String line : lines) {            
             mMDLines.add(parseLine(line));
         }        
     }
     
     public String getTitle() {
-        if(mContent==null||"".equals(mContent)) {
+        if (mContent==null||"".equals(mContent)) {
             return "";
         }
         int end = mContent.indexOf("\n");        
@@ -65,7 +65,7 @@ public class MDReader {
     
     public String getRawContent() {
         StringBuilder builder = new StringBuilder();
-        for(MDLine line : mMDLines) {
+        for (MDLine line : mMDLines) {
             builder.append(line.getRawContent());
             builder.append("\n");
         }
@@ -79,16 +79,16 @@ public class MDReader {
     private MDLine parseLine(String lineContent) {
         
         MDLine mdline = new MDLine(lineContent);
-        if("".equals(lineContent)) {
+        if ("".equals(lineContent)) {
             return mdline;
         }
         
         String pContent = lineContent;
         
         //Parse the start format        
-        for(MDParser parser : mMDParsers) {
+        for (MDParser parser : mMDParsers) {
             MDWord word = parser.parseLineFmt(pContent);
-            if(word.mFormat != Markdown.MD_FMT_TEXT) {
+            if (word.mFormat != Markdown.MD_FMT_TEXT) {
                 mdline.mFormat = word.mFormat;
                 pContent = lineContent.substring(word.mLength);
                 break;
@@ -100,13 +100,13 @@ public class MDReader {
         while(pContent.length() != 0) {
             boolean isFmtFound = false;
             //Check format start with pContent
-            for(MDParser parser : mMDParsers) {            
+            for (MDParser parser : mMDParsers) {            
                 MDWord word = parser.parseWordFmt(pContent);
-                if(word.mLength > 0) {
+                if (word.mLength > 0) {
                     isFmtFound = true;
                     //Add no format string first 
                     int noFmtContentLen = mNoFmtContent.length(); 
-                    if(noFmtContentLen!=0) {                
+                    if (noFmtContentLen!=0) {                
                         mdline.mMDWords.add(new MDWord(mNoFmtContent.toString(),noFmtContentLen,Markdown.MD_FMT_TEXT));
                         mNoFmtContent = new StringBuilder();
                     }                            
@@ -116,10 +116,10 @@ public class MDReader {
                 }
             }
             //If no format found, move to next position
-            if(!isFmtFound) {
+            if (!isFmtFound) {
                 mNoFmtContent.append(pContent.charAt(0));
                 pContent = pContent.substring(1);
-                if(pContent.length()==0) {
+                if (pContent.length()==0) {
                     mdline.mMDWords.add(new MDWord(mNoFmtContent.toString(),mNoFmtContent.length(),Markdown.MD_FMT_TEXT));
                     break;
                 }
@@ -131,9 +131,9 @@ public class MDReader {
     protected void display() {
         StringBuilder builder = new StringBuilder();
         builder.append("Markdown Parse: \n" + mContent + "\n\n");
-        for(MDLine line : mMDLines) {
+        for (MDLine line : mMDLines) {
             builder.append("Line format: " + line.mFormat + "\n");
-            for(MDWord word : line.mMDWords) {
+            for (MDWord word : line.mMDWords) {
                 builder.append("Word: "+word.mRawContent+", "+word.mFormat+"\n");
             }
         }        

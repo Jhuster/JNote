@@ -12,43 +12,40 @@
 package com.jhuster.jnote;
 
 import com.jhuster.jnote.markdown.MDReader;
-
-import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends BaseActivity {
     
     private TextView mTextView;
     private MDReader mMDReader;
     
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {	
 	    getActionBar().setDisplayHomeAsUpEnabled(true);  
-        getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg));        
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display);               
-        mTextView = (TextView)findViewById(R.id.DisplayTextView);
-        mMDReader = new MDReader(getAboutAuthor());        
+        getActionBar().setDisplayShowHomeEnabled(false); 
+        super.onCreate(savedInstanceState);                     
+	}
+
+    @Override
+    protected void initVariables() {
+        mMDReader = new MDReader(getAboutAuthor());
+    }
+
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_display);
+        mTextView = (TextView)findViewById(R.id.DisplayTextView);        
+    }
+
+    @Override
+    protected void loadData() {          
         mTextView.setTextKeepState(mMDReader.getFormattedContent(),BufferType.SPANNABLE);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {        
-	    switch (item.getItemId() ) {
-	    case android.R.id.home:
-	         finish();
-	    default:
-	         break;
-	    }
-	    return true;
-	}
+    }
 	
 	protected String getVersionDescription() {        
         PackageManager packageManager = getPackageManager();

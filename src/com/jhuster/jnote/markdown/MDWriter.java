@@ -48,10 +48,10 @@ public class MDWriter {
     public boolean setAsHeader() {
         String content = mEditText.getText().toString();
         Position position = getCurrentLinePosition(content);
-        if(content.substring(position.start,position.end).startsWith(HEADER3)) {
+        if (content.substring(position.start,position.end).startsWith(HEADER3)) {
             return false;
         }
-        if(!content.startsWith("#")) {
+        if (!content.startsWith("#")) {
             insert(position.start," ");
         }   
         insert(position.start,"#");
@@ -61,7 +61,7 @@ public class MDWriter {
     public boolean setAsCenter() {   
         String content = mEditText.getText().toString();
         Position position = getCurrentLinePosition(content);
-        if(content.substring(position.start,position.end).startsWith(CENTER_LEFT)) {
+        if (content.substring(position.start,position.end).startsWith(CENTER_LEFT)) {
             return false;
         }
         insert(position.start,CENTER_LEFT);
@@ -77,7 +77,7 @@ public class MDWriter {
     public boolean setAsList() {
         String content = mEditText.getText().toString();
         Position position = getCurrentLinePosition(content); 
-        if(content.substring(position.start,position.end).startsWith(LIST)) {
+        if (content.substring(position.start,position.end).startsWith(LIST)) {
             return false;
         }
         insert(position.start,LIST);            
@@ -87,7 +87,7 @@ public class MDWriter {
     public boolean setAsQuote() {               
         String content = mEditText.getText().toString();
         Position position = getCurrentLinePosition(content); 
-        if(content.substring(position.start,position.end).startsWith(QUOTE)) {
+        if (content.substring(position.start,position.end).startsWith(QUOTE)) {
             return false;
         }
         insert(position.start,QUOTE);            
@@ -96,7 +96,7 @@ public class MDWriter {
     
     public String getTitle() {
         String content = mEditText.getText().toString();
-        if("".equals(content)) {
+        if ("".equals(content)) {
             return "";
         }
         int end = content.indexOf("\n");        
@@ -109,18 +109,18 @@ public class MDWriter {
 
     protected Position getCurrentLinePosition(String content) {
         int index = 0;
-        if("".equals(content)) {
+        if ("".equals(content)) {
             return new Position(0,0); 
         }
         Position position = new Position(-1,-1);        
         //Find the line header "\n"         
         index = getCurrentPosition();
-        while(index>1 && content.charAt(index-1)!='\n') {
+        while (index>1 && content.charAt(index-1)!='\n') {
             index--;
         }
         position.start = index==1?0:index;
         index = getCurrentPosition();
-        while(index<content.length() && content.charAt(index)!='\n' ) {
+        while (index<content.length() && content.charAt(index)!='\n') {
             index++;
         }
         position.end = index;
@@ -133,7 +133,7 @@ public class MDWriter {
     
     protected void insert(int index,String text) {
         Editable editor = mEditText.getEditableText();
-        if( index < 0 || index >= editor.length() ) {
+        if ( index < 0 || index >= editor.length()) {
             editor.append(text);
         }
         else{

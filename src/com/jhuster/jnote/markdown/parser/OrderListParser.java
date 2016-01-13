@@ -21,7 +21,7 @@ public class OrderListParser extends MDParser {
 
     @Override
     public MDWord parseLineFmt(String content) {        
-        if(!content.matches(KEY)){
+        if (!content.matches(KEY)) {
             return MDWord.NULL;
         }  
         return new MDWord("",0,Markdown.MD_FMT_ORDER_LIST);

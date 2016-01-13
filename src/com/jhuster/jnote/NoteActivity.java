@@ -15,7 +15,6 @@ import java.util.Calendar;
 import com.jhuster.jnote.db.NoteDB;
 import com.jhuster.jnote.db.NoteDB.Note;
 import com.jhuster.jnote.markdown.MDWriter;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,30 +22,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-public class NoteActivity extends Activity {
+public class NoteActivity extends BaseActivity {
         
     private Note mNote = new Note();
     private MDWriter mMDWriter;
+    private EditText mNoteEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getActionBar().setDisplayHomeAsUpEnabled(true);  
         getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg));
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note);        
-        mMDWriter = new MDWriter((EditText)findViewById(R.id.NoteEditText));
-        mNote.key = getIntent().getLongExtra("NoteId",-1);
-        if(mNote.key!=-1) {
-            Note note = NoteDB.getInstance().get(mNote.key);
-            if(note!=null) {
-                mMDWriter.setContent(note.content);
-                mNote = note;
-            }      
-            else {
-                mNote.key=-1;   
-            }            
-        }
+        super.onCreate(savedInstanceState);        
     }
     
     @Override
@@ -59,6 +45,33 @@ public class NoteActivity extends Activity {
         onSaveNote();
         super.onPause();
     }
+    
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_note);
+        mNoteEditText = (EditText)findViewById(R.id.NoteEditText);        
+    }
+
+    @Override
+    protected void loadData() {
+        mMDWriter = new MDWriter(mNoteEditText);
+        mNote.key = getIntent().getLongExtra("NoteId",-1);
+        if (mNote.key!=-1) {
+            Note note = NoteDB.getInstance().get(mNote.key);
+            if (note!=null) {
+                mMDWriter.setContent(note.content);
+                mNote = note;
+            }      
+            else {
+                mNote.key=-1;   
+            }            
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,7 +82,7 @@ public class NoteActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_display) {
+        if (id == R.id.action_display) {
             onSaveNote();
             Intent intent = new Intent(this,DisplayActivity.class);
             intent.putExtra("Content",mMDWriter.getContent());
@@ -105,8 +118,8 @@ public class NoteActivity extends Activity {
     public void onSaveNote() {        
         mNote.title = mMDWriter.getTitle();
         mNote.content = mMDWriter.getContent();        
-        if(mNote.key==-1) {
-            if(!"".equals(mNote.content)) {
+        if (mNote.key==-1) {
+            if (!"".equals(mNote.content)) {
                 mNote.date = Calendar.getInstance().getTimeInMillis();
                 NoteDB.getInstance().insert(mNote);   
             }            

@@ -54,17 +54,17 @@ public class NoteAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {				
 		
-		if(convertView == null) {		
+		if (convertView == null) {		
 			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);          
             convertView = (LinearLayout)inflater.inflate(R.layout.layout_note_item, null);
             ViewHolder holder = new ViewHolder();
-            holder.mNoteDate  = (TextView)convertView.findViewById(R.id.NoteDateText);
-            holder.mNoteTitle  = (TextView)convertView.findViewById(R.id.NoteTitleText);                       
+            holder.mNoteDate = (TextView)convertView.findViewById(R.id.NoteDateText);
+            holder.mNoteTitle = (TextView)convertView.findViewById(R.id.NoteTitleText);                       
             convertView.setTag(holder);
 		}				
 
 		Note note = (Note)getItem(position);
-		if(note != null) {		   
+		if (note != null) {		   
 		    ViewHolder holder = (ViewHolder)convertView.getTag();
 		    holder.mNoteDate.setText(getDateStr(note.date));
 		    holder.mNoteTitle.setText(note.title);		    					   

@@ -23,13 +23,13 @@ public class HeaderParser extends MDParser {
 
     @Override
     public MDWord parseLineFmt(String content) {
-        if(content.startsWith(HEADER)) {
+        if (content.startsWith(HEADER)) {
             return new MDWord("",HEADER.length(),Markdown.MD_FMT_HEADER1); 
         }
-        else if(content.startsWith(HEADER2)) {
+        else if (content.startsWith(HEADER2)) {
             return new MDWord("",HEADER2.length(),Markdown.MD_FMT_HEADER2);
         }
-        else if(content.startsWith(HEADER3)) {
+        else if (content.startsWith(HEADER3)) {
             return new MDWord("",HEADER3.length(),Markdown.MD_FMT_HEADER3);
         }        
         return MDWord.NULL;       

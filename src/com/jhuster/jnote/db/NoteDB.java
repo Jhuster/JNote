@@ -42,10 +42,10 @@ public class NoteDB {
 	
 	protected static final NoteDB mInstance = new NoteDB();
 		
-	private final String DB_TABLE_CREATE_SQL = "create table " + DB_TABLE_NAME + " ( _id integer primary key autoincrement, "          
+	private final String DB_TABLE_CREATE_SQL = "create table " + DB_TABLE_NAME + " (_id integer primary key autoincrement, "          
 	        + DB_TABLE_COLUMN_TITLE + " text not null, "
 	        + DB_TABLE_COLUMN_CONTENT + " text not null, " 
-            + DB_TABLE_COLUMN_DATE + " integer );";		
+            + DB_TABLE_COLUMN_DATE + " integer);";		
 	
 	public static class Note {
 	    public long key = -1;
@@ -55,7 +55,7 @@ public class NoteDB {
 	}
 	
 	protected class DatabaseHelper extends SQLiteOpenHelper {
-		public DatabaseHelper(Context context,String dbName, int dbVersion ) {
+		public DatabaseHelper(Context context,String dbName, int dbVersion) {
 			super(context, dbName , null, dbVersion);
 		}
 		@Override
@@ -80,7 +80,7 @@ public class NoteDB {
 			mDBHelper = new DatabaseHelper(context,DB_NAME,DB_VERSION);
 			mDB = mDBHelper.getWritableDatabase();
 		}
-		catch( SQLException e ) {
+		catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}		
@@ -96,7 +96,7 @@ public class NoteDB {
         int size = 0;
         Cursor mCursor = mDB.query(DB_TABLE_NAME,new String[]{DB_PRIMARY_KEY},null,null,null,null, 
                 null, null);   
-        if(mCursor!=null) {
+        if (mCursor != null) {
             size = mCursor.getCount();
         }        
         mCursor.close();        
@@ -109,7 +109,7 @@ public class NoteDB {
 	    values.put(DB_TABLE_COLUMN_CONTENT, note.content);
 	    values.put(DB_TABLE_COLUMN_DATE, note.date);
 	    note.key = mDB.insert(DB_TABLE_NAME,null,values); 		
-		if(note.key == -1) {
+		if (note.key == -1) {
 			Log.e(TAG,"db insert fail!");
 			return false;
 		}	
@@ -117,7 +117,7 @@ public class NoteDB {
 	}	
 	
     public boolean update(Note note) {
-        if(note.key == -1) {
+        if (note.key == -1) {
            return false;
         }
         ContentValues values = new ContentValues();
@@ -125,7 +125,7 @@ public class NoteDB {
         values.put(DB_TABLE_COLUMN_CONTENT, note.content);
         values.put(DB_TABLE_COLUMN_DATE, note.date);
         String condition = DB_PRIMARY_KEY + "=" + "\'" + note.key + "\'";  
-        if(!update(values,condition,null)) {
+        if (!update(values,condition,null)) {
             return false;
         }
         return true;
@@ -133,7 +133,7 @@ public class NoteDB {
     
     protected boolean update(ContentValues values, String whereClause, String[] whereArgs) {        
         int rows = mDB.update(DB_TABLE_NAME,values, whereClause, whereArgs);
-        if( rows <= 0 ) {           
+        if (rows <= 0) {           
             Log.d(TAG,"db update fail!");
             return false;
         }   
@@ -142,7 +142,7 @@ public class NoteDB {
 	    
 	public boolean delete(int position) {  
 	    long key = getkey(position,null);
-        if( key == -1 ) {
+        if (key == -1) {
             return false;
         }
         String condition = DB_PRIMARY_KEY + "=" + "\'" + key + "\'";
@@ -151,7 +151,7 @@ public class NoteDB {
 
 	protected boolean delete(String whereClause, String[] whereArgs) {		
 		int rows = mDB.delete(DB_TABLE_NAME,whereClause,whereArgs);
-		if( rows <= 0 ) {
+		if (rows <= 0) {
 			Log.e(TAG,"db delete fail!");
 			return false;
 		}
@@ -169,7 +169,7 @@ public class NoteDB {
 	public Note get(long id) {      
 	    String condition = DB_PRIMARY_KEY + "=" + "\'" + id + "\'";  	           
         List<Note> notes = query(condition);
-        if( notes.isEmpty() ) {
+        if (notes.isEmpty()) {
             return null;
         }
         return notes.get(0);
@@ -179,7 +179,7 @@ public class NoteDB {
 	    Cursor cursor = mDB.query(DB_TABLE_NAME,null,condition,null,null,null,
 	            DB_DEFAULT_ORDERBY,null);	           
         List<Note> notes = extract(position,cursor);
-        if( notes.isEmpty() ) {
+        if (notes.isEmpty()) {
             return null;
         }
         return notes.get(0);
@@ -210,7 +210,7 @@ public class NoteDB {
 	protected List<Note> extract(int offset, Cursor cursor) {
 	    
 	    List<Note> notes = new ArrayList<Note>();
-	    if( cursor == null || cursor.getCount() <= offset ) {
+	    if (cursor == null || cursor.getCount() <= offset) {
             return notes;
         }
 
@@ -224,7 +224,7 @@ public class NoteDB {
             note.content = cursor.getString(cursor.getColumnIndex(DB_TABLE_COLUMN_CONTENT));        
             note.date = cursor.getLong(cursor.getColumnIndex(DB_TABLE_COLUMN_DATE));
             notes.add(note);            
-        }while(cursor.moveToNext());
+        } while(cursor.moveToNext());
         
         cursor.close();
         
@@ -235,7 +235,7 @@ public class NoteDB {
 	    long key = -1;	
 		Cursor cursor = mDB.query(true,DB_TABLE_NAME, new String[]{DB_PRIMARY_KEY},condition,null,null,null, 
 		        DB_DEFAULT_ORDERBY, null);		
-		if (cursor != null && cursor.getCount() > 0 ) {			
+		if (cursor != null && cursor.getCount() > 0) {			
 			cursor.moveToPosition(position);			
 			key = cursor.getLong(cursor.getColumnIndex(DB_PRIMARY_KEY));				
 			cursor.close();

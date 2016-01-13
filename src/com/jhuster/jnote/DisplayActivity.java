@@ -18,7 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import com.jhuster.jnote.markdown.MDReader;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
@@ -33,9 +32,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
-public class DisplayActivity extends Activity {
+public class DisplayActivity extends BaseActivity {
         
     private static final String DEFAULT_DIR = Environment.getExternalStorageDirectory() + File.separator + "JNote";
+    
     private TextView mTextView;
     private MDReader mMDReader;
     private ScrollView mRootView;
@@ -44,17 +44,29 @@ public class DisplayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         getActionBar().setDisplayHomeAsUpEnabled(true);  
         getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg));
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display);
-        checkStorageDir();
+    }
+
+    @Override
+    protected void initVariables() {
         String content = getIntent().getExtras().getString("Content");
+        mMDReader = new MDReader(content);
+        checkStorageDir();
+    }
+
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_display);
         mRootView = (ScrollView)findViewById(R.id.DisplayRootView);
-        mTextView = (TextView)findViewById(R.id.DisplayTextView);
-        mMDReader = new MDReader(content);        
+        mTextView = (TextView)findViewById(R.id.DisplayTextView);                
         mTextView.setTextKeepState(mMDReader.getFormattedContent(),BufferType.SPANNABLE);
     }
 
+    @Override
+    protected void loadData() {
+        
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_display, menu);
@@ -65,9 +77,6 @@ public class DisplayActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-        case android.R.id.home:
-             finish();
-             break;
         case R.id.action_save_md:  
              saveAsMardown();
              break;
@@ -78,7 +87,7 @@ public class DisplayActivity extends Activity {
              saveAsBitmap();
              break;
         default:
-            break;
+             break;
         }
         return super.onOptionsItemSelected(item);
     }

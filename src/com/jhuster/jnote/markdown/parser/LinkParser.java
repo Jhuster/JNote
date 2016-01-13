@@ -26,7 +26,7 @@ public class LinkParser extends MDParser {
 
     @Override
     public MDWord parseWordFmt(String content) {        
-        if(!content.matches(KEY)){
+        if (!content.matches(KEY)){
             return MDWord.NULL;
         }        
         int length = content.indexOf(')');        

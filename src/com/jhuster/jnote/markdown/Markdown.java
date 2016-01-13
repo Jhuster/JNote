@@ -52,7 +52,7 @@ public class Markdown {
         
         public String getRawContent() {
             StringBuilder builder = new StringBuilder();
-            for(MDWord word : mMDWords) {
+            for (MDWord word : mMDWords) {
                 builder.append(word.mRawContent);
             }
             return builder.toString();

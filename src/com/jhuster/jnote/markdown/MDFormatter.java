@@ -33,7 +33,7 @@ public class MDFormatter {
     private final SpannableStringBuilder mBuilder = new SpannableStringBuilder();
     
     public MDFormatter(List<MDLine> lines) {     
-        for(MDLine line : lines) {                        
+        for (MDLine line : lines) {                        
             format(line);
         }        
         mBuilder.setSpan(new TypefaceSpan("monospace"),0,mBuilder.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);          
@@ -45,18 +45,18 @@ public class MDFormatter {
     
     protected void format(MDLine line) {
         int start = mBuilder.length();
-        for(MDWord word : line.mMDWords) {
+        for (MDWord word : line.mMDWords) {
             int index = mBuilder.length();
             mBuilder.append(word.mRawContent);
             mBuilder.setSpan(getSpan(word.mFormat), index, mBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);                
         }
         mBuilder.append("\n");
-        if(line.mFormat==Markdown.MD_FMT_ORDER_LIST ||
+        if (line.mFormat==Markdown.MD_FMT_ORDER_LIST ||
             line.mFormat==Markdown.MD_FMT_UNORDER_LIST ||
             line.mFormat==Markdown.MD_FMT_QUOTE ) {            
             mBuilder.setSpan(new LeadingMarginSpan.Standard(40), start, mBuilder.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        if(line.mFormat != Markdown.MD_FMT_TEXT) {
+        if (line.mFormat != Markdown.MD_FMT_TEXT) {
             mBuilder.setSpan(getSpan(line.mFormat), start, mBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);                         
         }     
     }

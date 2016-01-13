@@ -21,7 +21,7 @@ public class UnOrderListParser extends MDParser {
 
     @Override
     public MDWord parseLineFmt(String content) {
-        if(content.charAt(0)!=KEY) {
+        if (content.charAt(0)!=KEY) {
             return MDWord.NULL;
         }
         return new MDWord("",1,Markdown.MD_FMT_UNORDER_LIST);

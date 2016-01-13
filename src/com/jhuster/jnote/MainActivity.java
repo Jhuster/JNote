@@ -12,11 +12,8 @@
 package com.jhuster.jnote;
 
 import java.util.Calendar;
-
 import com.jhuster.jnote.db.NoteDB;
 import com.jhuster.jnote.db.NoteDB.Note;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,7 +29,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
-public class MainActivity extends Activity implements OnItemClickListener {
+public class MainActivity extends BaseActivity implements OnItemClickListener {
     
     public static final String CONFIG_FIRST_START = "isFirstStart";
     
@@ -46,11 +43,24 @@ public class MainActivity extends Activity implements OnItemClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg));
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);          
+    }
+    
+    @Override
+    protected void onDestroy() {
+        NoteDB.getInstance().close();
+        super.onDestroy();        
+    }
+
+    @Override
+    protected void initVariables() {
         NoteDB.getInstance().open(this);
         onCheckFirstStart();
+    }
+
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);     
         mNoteListView = (ListView)findViewById(R.id.NoteListView);        
         mNoteAdapter = new NoteAdapter(this);
         mNoteListView.setAdapter(mNoteAdapter);
@@ -66,11 +76,10 @@ public class MainActivity extends Activity implements OnItemClickListener {
        mNoteListView.setOnItemLongClickListener(longListener); 
        mNoteListView.setOnItemClickListener(this);
     }
-    
+
     @Override
-    protected void onDestroy() {
-        NoteDB.getInstance().close();
-        super.onDestroy();        
+    protected void loadData() {
+
     }
     
     @Override
