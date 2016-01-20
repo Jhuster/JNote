@@ -8,7 +8,7 @@
 
 ## 应用截图
 
-![应用截图](http://www.jhuster.com/app/JNote/home.png)
+<img src="/screenshots/home.png" width="360" height="640" />
 
 ## 文章介绍
 
@@ -26,7 +26,7 @@
 
 - **二维码扫描**
 
-![二维码扫描](http://www.jhuster.com/app/JNote/download.png)
+<img src="/screenshots/download.png" width="200" height="200" />
 
 Thanks
 ----------
