@@ -89,7 +89,7 @@ public class NoteActivity extends BaseActivity {
             startActivity(intent);            
             return true;
         }
-        else if(id == android.R.id.home) {       
+        else if (id == android.R.id.home) {       
             finish();
         }
         return super.onOptionsItemSelected(item);

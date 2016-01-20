@@ -103,7 +103,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             startActivityForResult(intent,REQUEST_CODE_ADD);
             return true;
         }
-        else if(id == R.id.action_about) {
+        else if (id == R.id.action_about) {
             Intent intent = new Intent(this,AboutActivity.class);
             startActivity(intent);
             return true;
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     public boolean onContextItemSelected(MenuItem item) {               
         switch(item.getItemId()) {
             case R.id.DataDelete:
-                 if(mSelectedPosition != -1) {      
+                 if (mSelectedPosition != -1) {      
                      NoteDB.getInstance().delete(mSelectedPosition);
                      mNoteAdapter.notifyDataSetChanged();
                  }               
@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==REQUEST_CODE_ADD||requestCode==REQUEST_CODE_EDIT) {
+        if (requestCode==REQUEST_CODE_ADD||requestCode==REQUEST_CODE_EDIT) {
             mNoteAdapter.notifyDataSetChanged();    
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     
     protected void onCheckFirstStart() {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this); 
-        if(!mSharedPreferences.getBoolean(CONFIG_FIRST_START,true)) {
+        if (!mSharedPreferences.getBoolean(CONFIG_FIRST_START,true)) {
             return;
         }
         StringBuilder builder = new StringBuilder();

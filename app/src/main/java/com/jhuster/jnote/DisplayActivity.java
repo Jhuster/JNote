@@ -97,20 +97,20 @@ public class DisplayActivity extends BaseActivity {
     }
     
     public void checkStorageDir() {     
-        if(isSDCardMounted()) {            
+        if (isSDCardMounted()) {            
             File directory = new File(DEFAULT_DIR);
-            if( !directory.exists() ) {
+            if ( !directory.exists() ) {
                 directory.mkdir();
             }
         }
     }
     
     public boolean checkSaveEnv() {
-        if(!isSDCardMounted()) {
+        if (!isSDCardMounted()) {
             Toast.makeText(this, "找不到 SDCard !", Toast.LENGTH_LONG).show();
             return false;
         }
-        if("".equals(mMDReader.getContent())) {
+        if ("".equals(mMDReader.getContent())) {
             Toast.makeText(this, "没有内容,无法保存 !", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -118,7 +118,7 @@ public class DisplayActivity extends BaseActivity {
     }
     
     public void saveAsMardown() { 
-        if(!checkSaveEnv()) {
+        if (!checkSaveEnv()) {
             return;
         }
         String filepath = DEFAULT_DIR+File.separator+mMDReader.getTitle()+".md";
@@ -134,7 +134,7 @@ public class DisplayActivity extends BaseActivity {
     }
     
     public void saveAsRawContent() { 
-        if(!checkSaveEnv()) {
+        if (!checkSaveEnv()) {
             return;
         }
         String filepath = DEFAULT_DIR+File.separator+mMDReader.getTitle()+".txt";
@@ -150,14 +150,14 @@ public class DisplayActivity extends BaseActivity {
     }
     
     public void saveAsBitmap() { 
-        if(!checkSaveEnv()) {
+        if (!checkSaveEnv()) {
             return;
         }
         String filepath = DEFAULT_DIR+File.separator+mMDReader.getTitle()+".jpg";
         try {
             FileOutputStream stream = new FileOutputStream(filepath);
             Bitmap bitmap = createBitmap(mRootView);
-            if(bitmap!=null) {
+            if (bitmap!=null) {
                 bitmap.compress(CompressFormat.JPEG,  100, stream);
                 Toast.makeText(this, "成功保存到:"+filepath, Toast.LENGTH_LONG).show();
             }            
