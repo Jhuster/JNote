@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<lint>
-    <issue id="InflateParams">
-        <ignore path="src/com/jhuster/jnote/NoteAdapter.java" />
-    </issue>
-</lint>
