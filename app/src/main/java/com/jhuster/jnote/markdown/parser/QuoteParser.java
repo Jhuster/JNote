@@ -16,12 +16,12 @@ import com.jhuster.jnote.markdown.Markdown.MDParser;
 import com.jhuster.jnote.markdown.Markdown.MDWord;
 
 public class QuoteParser extends MDParser {
-    
+
     private static final char KEY = '>';
 
     @Override
     public MDWord parseLineFmt(String content) {
-        if (content.charAt(0)!=KEY) {
+        if (content.charAt(0) != KEY) {
             return MDWord.NULL;
         }
         return new MDWord("", 1, Markdown.MD_FMT_QUOTE);

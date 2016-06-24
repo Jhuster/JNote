@@ -16,7 +16,7 @@ import com.jhuster.jnote.markdown.Markdown.MDParser;
 import com.jhuster.jnote.markdown.Markdown.MDWord;
 
 public class CenterParser extends MDParser {
-    
+
     @Override
     public MDWord parseLineFmt(String content) {
         return MDWord.NULL;
@@ -24,10 +24,10 @@ public class CenterParser extends MDParser {
 
     @Override
     public MDWord parseWordFmt(String content) {
-        if (content.charAt(0)=='{'&&content.charAt(content.length()-1)=='}') {
+        if (content.charAt(0) == '{' && content.charAt(content.length() - 1) == '}') {
             int length = content.length();
-            return new MDWord(content.substring(1,length-1),length,Markdown.MD_FMT_CENTER);
+            return new MDWord(content.substring(1, length - 1), length, Markdown.MD_FMT_CENTER);
         }
-        return MDWord.NULL;        
+        return MDWord.NULL;
     }
 }

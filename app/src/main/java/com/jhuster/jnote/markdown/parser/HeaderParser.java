@@ -16,7 +16,7 @@ import com.jhuster.jnote.markdown.Markdown.MDParser;
 import com.jhuster.jnote.markdown.Markdown.MDWord;
 
 public class HeaderParser extends MDParser {
-    
+
     public static final String HEADER = "# ";
     public static final String HEADER2 = "## ";
     public static final String HEADER3 = "### ";
@@ -24,19 +24,17 @@ public class HeaderParser extends MDParser {
     @Override
     public MDWord parseLineFmt(String content) {
         if (content.startsWith(HEADER)) {
-            return new MDWord("",HEADER.length(),Markdown.MD_FMT_HEADER1); 
+            return new MDWord("", HEADER.length(), Markdown.MD_FMT_HEADER1);
+        } else if (content.startsWith(HEADER2)) {
+            return new MDWord("", HEADER2.length(), Markdown.MD_FMT_HEADER2);
+        } else if (content.startsWith(HEADER3)) {
+            return new MDWord("", HEADER3.length(), Markdown.MD_FMT_HEADER3);
         }
-        else if (content.startsWith(HEADER2)) {
-            return new MDWord("",HEADER2.length(),Markdown.MD_FMT_HEADER2);
-        }
-        else if (content.startsWith(HEADER3)) {
-            return new MDWord("",HEADER3.length(),Markdown.MD_FMT_HEADER3);
-        }        
-        return MDWord.NULL;       
+        return MDWord.NULL;
     }
 
     @Override
     public MDWord parseWordFmt(String content) {
         return MDWord.NULL;
-    }    
+    }
 }

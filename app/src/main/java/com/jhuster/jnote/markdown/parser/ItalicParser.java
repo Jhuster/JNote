@@ -16,7 +16,7 @@ import com.jhuster.jnote.markdown.Markdown.MDParser;
 import com.jhuster.jnote.markdown.Markdown.MDWord;
 
 public class ItalicParser extends MDParser {
-    
+
     private static final String KEY = "*";
 
     @Override
@@ -27,12 +27,12 @@ public class ItalicParser extends MDParser {
     @Override
     public MDWord parseWordFmt(String content) {
         if (!content.startsWith(KEY)) {
-            return MDWord.NULL; 
-        }
-        int position = content.indexOf(KEY,1);
-        if (position==-1) {
             return MDWord.NULL;
         }
-        return new MDWord(content.substring(1,position),position+1,Markdown.MD_FMT_ITALIC);
+        int position = content.indexOf(KEY, 1);
+        if (position == -1) {
+            return MDWord.NULL;
+        }
+        return new MDWord(content.substring(1, position), position + 1, Markdown.MD_FMT_ITALIC);
     }
 }

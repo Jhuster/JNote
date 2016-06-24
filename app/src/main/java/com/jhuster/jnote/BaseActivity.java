@@ -25,34 +25,36 @@ public abstract class BaseActivity extends Activity {
         initViews(savedInstanceState);
         loadData();
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
-    
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {        
-        switch (item.getItemId() ) {
-        case android.R.id.home:
-             finish();
-        default:
-             break;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                break;
         }
         return true;
     }
-    
+
     protected abstract void initVariables();
+
     protected abstract void initViews(Bundle savedInstanceState);
+
     protected abstract void loadData();
 }

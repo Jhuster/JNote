@@ -24,9 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".NoteActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".DisplayActivity"></activity>
-        <activity android:name=".AboutActivity"></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".DisplayActivity" />
+        <activity android:name=".AboutActivity" />
                 
     </application>
 

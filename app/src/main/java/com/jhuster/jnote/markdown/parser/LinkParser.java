@@ -16,7 +16,7 @@ import com.jhuster.jnote.markdown.Markdown.MDParser;
 import com.jhuster.jnote.markdown.Markdown.MDWord;
 
 public class LinkParser extends MDParser {
-    
+
     private static final String KEY = "[*](*)";
 
     @Override
@@ -25,12 +25,12 @@ public class LinkParser extends MDParser {
     }
 
     @Override
-    public MDWord parseWordFmt(String content) {        
-        if (!content.matches(KEY)){
+    public MDWord parseWordFmt(String content) {
+        if (!content.matches(KEY)) {
             return MDWord.NULL;
-        }        
-        int length = content.indexOf(')');        
-        return new MDWord(content.substring(0,length+1), length, Markdown.MD_FMT_LINK);
+        }
+        int length = content.indexOf(')');
+        return new MDWord(content.substring(0, length + 1), length, Markdown.MD_FMT_LINK);
     }
 
 }

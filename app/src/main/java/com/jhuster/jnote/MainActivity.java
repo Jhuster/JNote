@@ -12,8 +12,10 @@
 package com.jhuster.jnote;
 
 import java.util.Calendar;
+
 import com.jhuster.jnote.db.NoteDB;
 import com.jhuster.jnote.db.NoteDB.Note;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,26 +32,26 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener {
-    
+
     public static final String CONFIG_FIRST_START = "isFirstStart";
-    
-    private static final int REQUEST_CODE_ADD  = 0;
+
+    private static final int REQUEST_CODE_ADD = 0;
     private static final int REQUEST_CODE_EDIT = 1;
-    
+
     private ListView mNoteListView;
-    private NoteAdapter mNoteAdapter; 
-    private int mSelectedPosition;    
-    
+    private NoteAdapter mNoteAdapter;
+    private int mSelectedPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getActionBar().setDisplayShowHomeEnabled(false);
-        super.onCreate(savedInstanceState);          
+        super.onCreate(savedInstanceState);
     }
-    
+
     @Override
     protected void onDestroy() {
         NoteDB.getInstance().close();
-        super.onDestroy();        
+        super.onDestroy();
     }
 
     @Override
@@ -60,37 +62,37 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_main);     
-        mNoteListView = (ListView)findViewById(R.id.NoteListView);        
+        setContentView(R.layout.activity_main);
+        mNoteListView = (ListView) findViewById(R.id.NoteListView);
         mNoteAdapter = new NoteAdapter(this);
         mNoteListView.setAdapter(mNoteAdapter);
         registerForContextMenu(mNoteListView);
         OnItemLongClickListener longListener = new OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {                   
-                mSelectedPosition = position;  
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedPosition = position;
                 mNoteListView.showContextMenu();
                 return true;
-                
+
             }
-       };      
-       mNoteListView.setOnItemLongClickListener(longListener); 
-       mNoteListView.setOnItemClickListener(this);
+        };
+        mNoteListView.setOnItemLongClickListener(longListener);
+        mNoteListView.setOnItemClickListener(this);
     }
 
     @Override
     protected void loadData() {
 
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    
+
     @Override
-    public void onCreateContextMenu(ContextMenu menu,View v,ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);       
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.data_menu, menu);
     }
@@ -99,54 +101,53 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_add) {
-            Intent intent = new Intent(this,NoteActivity.class);
-            startActivityForResult(intent,REQUEST_CODE_ADD);
+            Intent intent = new Intent(this, NoteActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_ADD);
             return true;
-        }
-        else if (id == R.id.action_about) {
-            Intent intent = new Intent(this,AboutActivity.class);
+        } else if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
-    public boolean onContextItemSelected(MenuItem item) {               
-        switch(item.getItemId()) {
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.DataDelete:
-                 if (mSelectedPosition != -1) {      
-                     NoteDB.getInstance().delete(mSelectedPosition);
-                     mNoteAdapter.notifyDataSetChanged();
-                 }               
-                 return true;
-            case R.id.DataClear:    
-                 NoteDB.getInstance().clear();
-                 mNoteAdapter.notifyDataSetChanged();
-                 return true;           
+                if (mSelectedPosition != -1) {
+                    NoteDB.getInstance().delete(mSelectedPosition);
+                    mNoteAdapter.notifyDataSetChanged();
+                }
+                return true;
+            case R.id.DataClear:
+                NoteDB.getInstance().clear();
+                mNoteAdapter.notifyDataSetChanged();
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-        Intent intent = new Intent(this,NoteActivity.class);
-        intent.putExtra("NoteId",id);
-        startActivityForResult(intent,REQUEST_CODE_EDIT);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, NoteActivity.class);
+        intent.putExtra("NoteId", id);
+        startActivityForResult(intent, REQUEST_CODE_EDIT);
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode==REQUEST_CODE_ADD||requestCode==REQUEST_CODE_EDIT) {
-            mNoteAdapter.notifyDataSetChanged();    
+        if (requestCode == REQUEST_CODE_ADD || requestCode == REQUEST_CODE_EDIT) {
+            mNoteAdapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    
+
     protected void onCheckFirstStart() {
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this); 
-        if (!mSharedPreferences.getBoolean(CONFIG_FIRST_START,true)) {
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!mSharedPreferences.getBoolean(CONFIG_FIRST_START, true)) {
             return;
         }
         StringBuilder builder = new StringBuilder();
@@ -189,8 +190,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         note.content = builder.toString();
         note.date = Calendar.getInstance().getTimeInMillis();
         NoteDB.getInstance().insert(note);
-        SharedPreferences.Editor edit = mSharedPreferences.edit();        
-        edit.putBoolean(CONFIG_FIRST_START,false);       
+        SharedPreferences.Editor edit = mSharedPreferences.edit();
+        edit.putBoolean(CONFIG_FIRST_START, false);
         edit.commit();
     }
 }
