@@ -74,8 +74,6 @@ public class NoteDB {
     private NoteDB() {
     }
 
-    ;
-
     public static NoteDB getInstance() {
         return mInstance;
     }
@@ -212,7 +210,6 @@ public class NoteDB {
     }
 
     protected List<Note> extract(int offset, Cursor cursor) {
-
         List<Note> notes = new ArrayList<Note>();
         if (cursor == null || cursor.getCount() <= offset) {
             return notes;
